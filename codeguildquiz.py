@@ -14,14 +14,23 @@ print people
 
 #7
 
-b = 10
-c = 5
-d = 3
-e = 6
-f = 15
-g = b + c
+# b = 10
+# c = 5
+# d = 3
+# e = 6
+# f = 15
+# g = b + c
 
-print g
+# print g
+# def add(a, b):
+# print a + b
+
+# add(5, 5)
+# add(10, 15)
+# add(3,6)
+
+
+
 
 #8 not sure how to do this one
 # def add(a, b):
@@ -32,8 +41,18 @@ print g
 
 #9
 
-
-
+def fizbuzz():
+	x = range(1,101) 
+	for i in x:
+		if i % 3 == 0 and i % 5 == 0 :
+			print "fizzbuck"
+		elif i % 3 == 0 :
+			print "fizz"
+		elif i % 5 == 0 :
+			print "buzz"
+		else :
+			print i
+fizbuzz()
 #10 
 
 x = range(1, 101)
@@ -41,7 +60,7 @@ print x
 
 
 #11 to 17
-class customer():
+class Customer():
 	def __init__ (self, name, age, location, creditscore):
 		self.name = name
 		self.age = age
@@ -52,7 +71,7 @@ class customer():
 		print " %s is %d from %s with a credit score of %s" % (self.name, self.age, self.location, self.creditscore)
 
 
-Jessie = customer("Jessie", 22, "washington", "718")
+Jessie = Customer("Jessie", 22, "washington", "718")
 
 print Jessie.name
 print Jessie.location
@@ -61,4 +80,5 @@ print Jessie.creditscore
 Jessie.creditscore = 780
 
 print Jessie.creditscore
+print ("*" * 20)
 
