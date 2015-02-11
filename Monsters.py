@@ -106,6 +106,7 @@ def play(monster, pixie):
 			print "you killed the monster"
 		elif pixie.health <= 0 :
 			print " Oh no you died. Start again "
+			pixie.health = 200
 			user_level()
 
 		else :
