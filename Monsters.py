@@ -1,4 +1,7 @@
 import random
+import os
+
+# TODO: - good to add in different areas
 
 class Monster():
 	def __init__ (self, nickname, attack, element, species, health):
@@ -14,7 +17,18 @@ class Monster():
 george = Monster("George the Dragon", {"swipes":10, "pushes":20, "throws":30, "bites":50}, "Fire", "Dragon", 50)
 tina = Monster("Tina the Tiger", {"swipes":10, "pushes":20, "throws":30, "claws":50, "bites":100}, "Earth", "Tiger", 100)
 claudette = Monster("Claudette the Crocodile",{"swipes":10, "snaps":20, "claws":30, "bites":50, "drowns":100}, "Water", "Crocodile", 50)
-edgar = Monster("Edgar the Eagle", {"swipes":10, "snaps":20, "claws":30, "pecks":50, "drops from a height":100}, "Air", "Eagle", 200)
+# edgar = Monster("Edgar the Eagle", {"swipes":10, "snaps":20, "claws":30, "pecks":50, "drops from a height":100, }, "Air", "Eagle", 200, )
+
+class MountainMonster(Monster):
+	def __init__( self, nickname, attack, element, species, health, key):
+		self.nickname = nickname
+		self.attack = attack
+		self.element = element
+		self.species = species
+		self.health = health
+		self.key = key
+
+edgar = MountainMonster("Edgar the Eagle", {"swipes":10, "snaps":20, "claws":30, "pecks":50, "drops from a height":100, "flys towards" : 20 }, "Air", "Eagle", 200, "guards key")
 
 
 class Pixie():
@@ -36,12 +50,14 @@ Camille = Pixie ("Camille", {"swipes":5, "pushes":10, "throws":20, "creates trem
 class Lands():
 	def __init__(self, monsters, gamelevel):
 		self.monsters = monsters
-		self. gamelevel = gamelevel
+		self.gamelevel = gamelevel
+		
 
 undergroundcaves = Lands(george, 1)
 darkforest = Lands(tina, 2)
 marshlands = Lands(claudette, 3)
 mountains = Lands(edgar, 4)
+
 
 userpixie = None
 userland = None
@@ -72,13 +88,31 @@ def user_choice():
 def fork_choice(monster):
 	fork_input = raw_input("should we go left or should we go right? (l/r) ").lower()
 	if fork_input == "left" or fork_input == "l":
-		print "oh no you walked for 200 metres but its a dead end . Lets go back"
+		print "oh no you walked for 400 feet but its a dead end . Lets go back"
 		fork_choice(monster)
 	elif fork_input == "right" or fork_input == "r":
 		print "Oh no! There is the %s - quick get out of the way! " % (monster.nickname)
 	else :
 		"Thats not an option!"
 		fork_choice(monster)
+
+def fork_choice_mountain(mountainmonster) :
+	fork_input = raw_input("should we go left, right or straight ahead (l/r/s) ").lower()
+	if fork_input == "left" or fork_input == "l" :
+		print "it looks like this there is a sheer cliff. Let's go back"
+		fork_choice_mountain(mountainmonster)
+	elif fork_input == "right" or fork_input == "r" :
+		print "oh no this is a dead end. Lets go back"
+		fork_choice_mountain(mountainmonster)
+	elif fork_input == "straight" or fork_input == "s" :
+		print "Oh no! There is the %s - quick get out of the way! " % (mountainmonster.nickname)
+		playlevel4(mountainmonster, userpixie)
+	else:
+		print "thats not an option "
+		fork_choice_mountain(mountainmonster)
+
+# def pixiehealthnumber(pixie) :
+
 
 def playchoice(monster, pixie):
 	play_choice = raw_input("Would you like to attack or heal yourself? (a,h) ").lower()
@@ -113,22 +147,57 @@ def play(monster, pixie):
 			print " Sorry we encountered a problem. Please start again"
 			user_choice()
 
+def playlevel4(mountainmonster, pixie):
+	# print("playlevel4 was called")
+	while pixie.health > 0 and mountainmonster.health > 10 :
+		mountainmonster_attack = random.choice(mountainmonster.attack.keys())
+		pixie.health -= mountainmonster.attack[mountainmonster_attack]
+		print "%s uses %s and hits for %d" % (mountainmonster.nickname, mountainmonster_attack, mountainmonster.attack[mountainmonster_attack])
+		playchoice(mountainmonster, pixie)
+	else : 
+		if mountainmonster.health <= 10 :
+			print "He flew away, quick grab the key in the nest"
+			print "We made it! Quick open the door to Pixie Land before Edgar comes back" 
+			print "Welcome home to Pixie Land"
+			exit()
+		elif pixie.health <= 0 :
+			print " Oh no you died. Start again "
+			pixie.health = 200
+			user_level()
+		else :
+			print " Sorry we encountered a problem. Please start again"
+			user_choice()
 
 #functions :player levels -----------------------------------------
+def level5(pixie):
+	global userland
+	pixie_level = raw_input = ("Use the key to open the door and lets go home! (y/n) ").lower()
+	if pixie_level == "y" or pixie_level == "yes" :
+		print " Welcome Home! "
+	elif pixie_level == "n" or pixie_level == "no":
+		userland = None
+		print "Thankyou for playing the game"
+		exit()
+	else :
+		"sorry I do not recognise your choice"
+		level4(userpixie)
+
 def level4(pixie):
 	global userland 
 	mountain_level = raw_input( "Are you ready to climb the mountain? (y/n) ").lower()
 	if mountain_level == "y" or mountain_level == "yes" :
 		userland = mountains
-		print 
-		''''
-ENTERING THE MOUNTAINS 
+		para_stringtwo = ''''ENTERING THE MOUNTAINS 
+
+You are in the final land of the quest to get home to Pixieland. Now for the final test. 
+You must retrieve the key to open the door to Pixieland. The key is in the eagle's nest. 
+But since there are chicks why not make him fly away while you retrieve the key.
 
 
 ----------------------------------------------------------------'''
-
-		fork_choice(edgar)	
-		play(edgar, userpixie)
+		print para_stringtwo
+		fork_choice_mountain(edgar)	
+		playlevel4(edgar, userpixie)
 	elif mountain_level == "n" or mountain_level == "no":
 		userland = None
 		print "Thankyou for playing the game"
@@ -140,18 +209,19 @@ ENTERING THE MOUNTAINS
 
 def level3(pixie):
 	global userland 
-	marshlands_level = raw_input( "Are you ready enter the marshlands? (y/n) ").lower()
+	marshlands_level = raw_input("Are you ready to enter the marshlands? (y/n) ").lower()
 	if marshlands_level == "y" or marshlands_level == "yes" :
 		userland = marshlands
-		print 
-		''''
-ENTERING THE MARSHLANDS 
+		para_stringthree = '''ENTERING THE MARSHLANDS 
 
 
 ----------------------------------------------------------------'''
-
+		print para_stringthree
 		fork_choice(claudette)	
 		play(claudette, userpixie)
+		print ''' yes you defeated Claudette the Crocodile. 
+Lets get out of the Marshands and into the final land - the Mountains. 
+Lets hope we don't meet Edgar the eagle while we rtrieve the key to Pixie Land!! ''' 
 		level4(userpixie)
 	elif marshlands_level == "n" or marshlands_level == "no":
 		userland = None
@@ -167,15 +237,17 @@ def level2(pixie):
 	darkforest_level = raw_input( "Are you ready enter the dark forest? (y/n) ").lower()
 	if darkforest_level == "y" or darkforest_level == "yes" :
 		userland = darkforest
-		print 
-		''''
-ENTERING THE DARK FOREST
+		para_stringfour = '''ENTERING THE DARK FOREST
 
 
 ----------------------------------------------------------------'''
-
+		print para_stringfour
 		fork_choice(tina)	
 		play(tina, userpixie)
+
+		print ''' yes you defeated Tina the Tiger. 
+Lets get out of the Dark Forest and into the Marshlands. 
+Lets hope we don't meet Collette the Crocodile!! ''' 
 		level3(userpixie)
 	elif darkforest_level == "n" or darkforest_level == "no":
 		userland = None
@@ -190,16 +262,11 @@ def level1(pixie):
 	undergroundcaves_level = raw_input( "Are you ready enter the underground caves? (y/n) ").lower()
 	if undergroundcaves_level == "y" or undergroundcaves_level == "yes" :
 		userland = undergroundcaves
-		print 
-		'''
-ENTERING THE UNDERGROUND CAVES
-
-Narrator :
+		para_string = '''ENTERING THE UNDERGROUND CAVES
  We walk through the dark caves for half a mile until we encounter a fork? 
 ---------------------------------------------------------------------
 '''
-
-
+		print para_string
 		fork_choice(george)	
 		play(george, userpixie)
 
@@ -264,6 +331,9 @@ def user_level():
 
 welcome()
 user_level()
+
+
+
 
 
 
