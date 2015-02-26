@@ -39,5 +39,5 @@ key1
 
 
 for index, person in people.items():
-	print index, person["age"]
+	print index, person["ag e"]
 
