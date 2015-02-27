@@ -1,3 +1,5 @@
+#Classes
+
 class Store(object):
 	def __init__(self, products, shopping_cart = 0, payment = 0, customer = 0):
 		self.products = products
@@ -23,22 +25,17 @@ inventory = [
 	Product("green beans", "- Farm fresh green beans", "250gr", "$4.99", "farmfresh", "produce"),
 	Product("bananas", "- Individual banana", "200gr", "$0.19", "African", "produce"),
 	Product("sparkling water", "- San Pelligrino Sparkling water", "1 litre", "$2.09", "San Pelligrino", "Beverages"),
-	Product("Apple Juice", "- Treetop Apple Juice", "1 litre", "$3.45", "Treetop", "Beverages")]
+	Product("apple juice", "- Treetop Apple Juice", "1 litre", "$3.45", "Treetop", "Beverages")]
 g_store = Store(inventory)
+
+itemname = None
 
 
 class Shopping_cart(Product):
 	def __init__(basket):
 		self.basket = basket
 	
-	def new_item_in_basket():
-		new_item_in_basket = raw_input("Would you like to add %s to your basket" % (Product.name)).lower
-		if answer == "yes" or answer == "y":
-			print "You have added %s to your basket''' %" % (Product.name)
-		elif answer == "no" or answer == "n":
-			print "You have not added %s to your basket" % (Product.name)
-		else :
-			print "Sorry I didn't understand"
+
 	
 	
 class Customers(object):
@@ -46,9 +43,14 @@ class Customers(object):
 		self.average_spend = average_spend
 		self.payment = payment
 
-	def get_customer(self):
-		customer_name = raw_input("What is your name?\n")
-		print "Welcome %s" % (customer_name)
+customer_list = [
+Customers("Sally"),
+Customers("David"),
+]
+
+# def get_customer(self):
+# 	customer_name = raw_input("What is your name?\n")
+# 	print "Welcome %s" % (customer_name)
 
 #Script
 
@@ -64,12 +66,16 @@ Here are the list of products we stock :
 ---------------------------
 '''
 
+break_section = '''
+------------------------------
+'''
+
 
 #functions
 
 def Welcome_greeting(cust):
 	print Welcome
-	cust.get_customer()
+	# cust.get_customer()
 
 def Search(item):
 	for i in g_store.products:
@@ -78,12 +84,54 @@ def Search(item):
 
 	return None
 
-# def search(Product):
-#     for name in Product:
-#         if name == x:
-#             return True
-#     return False
-# def checkout
+# def quantity():
+# 	global itemname
+# 	quantity = raw_input("How many would you like?  ")
+
+
+def basket_input():
+	global itemname
+	basket = raw_input( "Would you like to add this to your basket?  ")
+	if basket == "yes" or basket == "y":
+		print "You have added %s to your basket" % (itemname)
+	elif basket == "no" or basket == "n":
+		print "You have not added %s to your basket" % (itemname)
+	else :
+		print "Sorry I didn't understand"
+
+def total_in_basket(Customer):
+	global itemname
+	found = Search(itemname)
+	print "the total value in the basket is %s . " % (found.price)
+
+def get_total(self):
+        total = 0.0
+        for total in g_store:
+            g_store_total = g_store.quantity * g_store.price
+            total = total 
+        print "The total value in the basket is %s . " % (found.price)
+
+def basket_choice():
+	global itemname
+	itemname = raw_input(" What would you like to add to your basket?  ").lower()
+	found = Search(itemname)
+	if found:
+		print found.name
+		print found.price
+		print found.weight
+	else:
+		print "We don't have that item in stock "
+		basket_choice()
+
+
+def new_item_in_basket():
+		new_item_in_basket = raw_input("Would you like to add %s to your basket" % (Product.name)).lower
+		if answer == "yes" or answer == "y":
+			print "You have added %s to your basket''' %" % (Product.name)
+		elif answer == "no" or answer == "n":
+			print "You have not added %s to your basket" % (Product.name)
+		else :
+			print "Sorry I didn't understand"
 
 #Actual Shopping experience
 customer = Customers()
@@ -91,27 +139,19 @@ customer = Customers()
 Welcome_greeting(customer)
 
 print List_of_products
+
 for product in g_store.products:
-	print product.name
-print '''
-------------------------------
-'''
+	print product.product
 
-item = raw_input(" What would you like to add to your basket?  ").lower()
-found = Search(item)
-if found:
-	print found.product
-	print found.price
-	
-else:
-	print "We don't have that item in stock "
-	# print item = raw_input(" What would you like to add to your basket?  ").lower()
+print break_section
 
-print '''
-------------------------------
-'''
-basket = raw_input( "Would you like to add this to your basket?  ")
+basket_choice()
 
+basket_input()
+
+print break_section
+
+total_in_basket()
 
 
 

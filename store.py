@@ -31,7 +31,6 @@ class CartLineItem():
         output = output + str(self.quantity * self.item.price)
         return output
 
-
 class Cart():
     def __init__(self):
         self.selected_items = []
