@@ -35,8 +35,6 @@ class Shopping_cart(Product):
 	def __init__(basket):
 		self.basket = basket
 	
-
-	
 	
 class Customers(object):
 	def __init__(self, average_spend = 0, payment = 0):

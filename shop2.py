@@ -9,21 +9,20 @@ class Store(object):
 
 
 class Product(object):
-	def __init__(self, name, price, inventory):
+	def __init__(self, name, price, quantity):
 		self.product = product
 		self.name = name
 		self.price = price
 		self.inventory = inventory
 		
 inventory = [
-	Product("milk", "$1.99", 8), 
-	Product("eggs", "$3.24", 8),
-	Product("wholewheat bread", "$4.99", 8),
-	Product("chocolate chip cookie", "$0.99" 8),
-	Product("green beans", "$4.99",8 ),
-	Product("bananas", "$0.19",8 ),
-	Product("sparkling water", "$2.09",8),
-	Product("apple juice", "$3.45", 8)]
+Product("milk", "$1.99", 8), 
+Product("eggs", "$3.24", 8),
+Product("wholewheat bread", "$4.99", 8),
+Product("green beans", "$4.99",8 ),
+Product("bananas", "$0.19",8 ),
+Product("apple juice", "$3.45", 8)]
+
 g_store = Store(inventory)
 
 class Customers(object):
@@ -36,12 +35,35 @@ Customers("Sally"),
 Customers("David"),
 ]
 
-
 itemname = None
-
 
 class Shopping_cart(Product):
 	def __init__(basket):
 		self.basket = basket
 	
-	
+def Welcome_greeting(cust):
+	print Welcome
+	# cust.get_customer()
+
+def Search(item):
+	for search_1 in g_store.products:
+		if item == search_1.name 
+			return search_1
+
+def get_total(self):
+        total = 0.0
+        for total in g_store:
+            g_store_total = g_store.quantity * g_store.price
+            total = total 
+        print total
+
+
+Welcome_greeting(customer)
+
+print g_store
+
+for product in g_store.products:
+	print product.name
+
+print break_section
+
